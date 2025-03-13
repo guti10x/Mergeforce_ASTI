@@ -2,33 +2,33 @@ from pymata4 import pymata4
 import time
 import random
 
-# Inicializar la placa Arduino
+
 board = pymata4.Pymata4()
 
-# Pines de los motores
+
 in1 = 6  # IN1 - motor 1 (izquierdo)
 in2 = 7  # IN2 - motor 1 (izquierdo)
 in3 = 3  # IN3 - motor 2 (derecho)
 in4 = 4  # IN4 - motor 2 (derecho)
 
-# Pines de los sensores IR
+
 sensorIR_1 = 47  # Sensor frontal izquierdo
 sensorIR_2 = 49  # Sensor frontal central izquierdo
 sensorIR_3 = 51  # Sensor frontal central derecho
 sensorIR_4 = 53  # Sensor frontal derecho
 
-# Configurar pines de salida para los motores
+
 board.set_pin_mode_digital_output(in1)
 board.set_pin_mode_digital_output(in2)
 board.set_pin_mode_digital_output(in3)
 board.set_pin_mode_digital_output(in4)
 
-# Configurar pines de entrada para los sensores IR
+
 sensors = [sensorIR_1, sensorIR_2, sensorIR_3, sensorIR_4]
 for sensor in sensors:
     board.set_pin_mode_digital_input(sensor)
 
-# Funciones de movimiento
+
 def move_forward(duration=0.1):
     """Avanzar: ambos motores hacia adelante"""
     board.digital_write(in1, 1)
@@ -72,13 +72,13 @@ def stop_motors():
     board.digital_write(in3, 0)
     board.digital_write(in4, 0)
 
-# Lógica principal
+
 try:
     while True:
         # Leer los valores de los sensores IR (0 = línea detectada, 1 = no línea)
         sensor_values = [board.digital_read(sensor)[0] for sensor in sensors]
         
-        # Mostrar valores de los sensores (opcional, para depuración)
+        # opcional, para depuración
         print(f"Sensor 1: {sensor_values[0]}, Sensor 2: {sensor_values[1]}, Sensor 3: {sensor_values[2]}, Sensor 4: {sensor_values[3]}")
 
         # Estrategia para SUMO
